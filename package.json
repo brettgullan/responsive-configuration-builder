@@ -1,0 +1,27 @@
+{
+  "name": "responsive-tools",
+  "version": "0.0.1",
+  "description": "Utility library for generating responsive image urls, sizes, sources and srcsets.",
+  "main": "index.js",
+  "scripts": {
+    "build": "neutrino build",
+    "test": "neutrino test",
+    "test:watch": "neutrino test --watch"
+  },
+  "keywords": [
+    "responsive",
+    "picture",
+    "image"
+  ],
+  "author": "Brett Gullan",
+  "license": "MIT",
+  "devDependencies": {
+    "@neutrinojs/library": "^8.3.0",
+    "@neutrinojs/mocha": "^8.3.0",
+    "chai": "^4.2.0",
+    "neutrino": "^8.3.0"
+  },
+  "dependencies": {
+    "ramda": "^0.26.1"
+  }
+}
