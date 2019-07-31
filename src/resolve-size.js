@@ -1,5 +1,5 @@
 import { evaluateRatio } from './evaluate-ratio'
-import { resolveNumericValue } from './helpers'
+import { convertToNumericValue } from './helpers'
 
 //-----------------------------------------------------------------------------
 
@@ -29,8 +29,8 @@ export const resolveSize = ({
   aspectRatio,
   'aspect-ratio': ar,
 }) => {
-  const w = resolveNumericValue(width)
-  const h = resolveNumericValue(height)
+  const w = convertToNumericValue(width)
+  const h = convertToNumericValue(height)
   const r = ratio || aspectRatio || ar
   return {
     width: w,

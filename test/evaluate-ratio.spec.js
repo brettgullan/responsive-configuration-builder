@@ -28,7 +28,7 @@ describe('evaluateRatio', () => {
     expect(evaluateRatio('4:3')).to.equal(0.75)
   })
 
-  it('barf on non-numeric values', () => {
-    expect(evaluateRatio('some thing else')).to.equal(-1)
+  it('non-numeric values resolve to 0', () => {
+    expect(evaluateRatio('some thing else')).to.equal(0)
   })
 })

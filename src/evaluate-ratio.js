@@ -44,7 +44,7 @@ export const evaluateRatio = (ratio) => {
   }
 
   // wtf?
-  return -1
+  return 0
 }
 
 export default evaluateRatio

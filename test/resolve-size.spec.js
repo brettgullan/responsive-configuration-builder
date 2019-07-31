@@ -4,7 +4,7 @@ import resolveSize from '../src/resolve-size'
 
 //-----------------------------------------------------------------------------
 
-describe('resolveSize', () => {
+describe.only('resolveSize', () => {
   it('given width/height size object, returns same', () => {
     const size = {
       width: 160,

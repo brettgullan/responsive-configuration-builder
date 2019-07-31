@@ -34,6 +34,10 @@ export const srcsetByScale = compose(
 
 //-----------------------------------------------------------------------------
 
+export const generateSizesForRatio = (size, ratio) => {}
+
+//-----------------------------------------------------------------------------
+
 export default {
   srcsetByScale,
 }

@@ -3,11 +3,12 @@
 import buildSrcSet, {
   srcsetByScale,
   generateSizesForScale,
+  generateSizesForRatio,
 } from '../src/build-srcset'
 
 //-----------------------------------------------------------------------------
 
-describe.only('srcsetByScale', () => {
+describe('srcsetByScale', () => {
   const expected = [
     {
       height: 180,
@@ -81,6 +82,30 @@ describe.only('srcsetByScale', () => {
     ]
 
     expect(result).to.deep.equal(expected)
+  })
+})
+
+describe('srcsetByScale', () => {
+  const expected = [
+    {
+      height: 135,
+      width: 240,
+    },
+    {
+      height: 180,
+      width: 320,
+    },
+    {
+      height: 270,
+      width: 480,
+    },
+  ]
+
+  it('builds a srcset size array for given widths and (aspect) ratio', () => {
+    const widths = [240, 320, 480]
+    const ratio = 16 / 9
+
+    expect(generateSizesForScale(widths, ratio)).to.deep.equal(expected)
   })
 })
 
