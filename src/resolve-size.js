@@ -1,9 +1,7 @@
 import { evaluateRatio } from './evaluate-ratio'
+import { resolveNumericValue } from './helpers'
 
 //-----------------------------------------------------------------------------
-
-const resolveNumericValue = (value) =>
-  Number.isNaN(parseInt(value)) ? undefined : parseInt(value)
 
 /**
  * Resolves a 'size' object given an input object containing `width`

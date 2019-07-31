@@ -1,10 +1,13 @@
 /* global expect */
 
-import buildSrcSet, { srcsetByScale } from '../src/build-srcset'
+import buildSrcSet, {
+  srcsetByScale,
+  generateSizesForScale,
+} from '../src/build-srcset'
 
 //-----------------------------------------------------------------------------
 
-describe('srcsetByScale', () => {
+describe.only('srcsetByScale', () => {
   const expected = [
     {
       height: 180,
@@ -31,11 +34,53 @@ describe('srcsetByScale', () => {
     expect(srcsetByScale(size, scale)).to.deep.equal(expected)
   })
 
+  it('should build a srcset size array for given size (object) and scale', () => {
+    const size = { width: 240, height: 180 }
+    const scale = [1, 1.5, 2, 3]
+
+    expect(generateSizesForScale(size, scale)).to.deep.equal(expected)
+  })
+
   it('should build a srcset size array for given size (array) and scale', () => {
     const size = [240, 180]
     const scale = [1, 1.5, 2, 3]
 
-    expect(buildSrcSet.srcsetByScale(size, scale)).to.deep.equal(expected)
+    const result = buildSrcSet.srcsetByScale(size, scale)
+    expect(result).to.deep.equal(expected)
+  })
+
+  it('should build a srcset size array when sizes are parseable strings', () => {
+    const size = { width: '240px', height: '180px' }
+    const scale = [1, 1.5, 2, 3]
+
+    expect(srcsetByScale(size, scale)).to.deep.equal(expected)
+  })
+
+  it('should build a srcset size array when sizes are unparseable strings', () => {
+    const size = { width: 'unparseable', height: 'unparseable' }
+    const scale = [1, 1.5, 2, 3]
+
+    const result = srcsetByScale(size, scale)
+    const expected = [
+      {
+        height: undefined,
+        width: undefined,
+      },
+      {
+        height: undefined,
+        width: undefined,
+      },
+      {
+        height: undefined,
+        width: undefined,
+      },
+      {
+        height: undefined,
+        width: undefined,
+      },
+    ]
+
+    expect(result).to.deep.equal(expected)
   })
 })
 
@@ -47,24 +92,7 @@ const srcsetWidths = {
   aspectRatio: 16 / 9,
 }
 
-const srcsetScale = {
-  size: [240, 180],
-  scale: [1, 1.2, 1.5, 2, 2.5, 3],
-}
-
 const srcset = (widths, aspectRatio) =>
   widths.map((width) => resolveSize({ width, aspectRatio }))
 
-const srcsetByScale = (size, scale) => scale.map((multiplier) => map(multiply(multiplier), size))
-
-const multiplier = (size) => compose(map(__, size), multiply)
-const generateScale = (size, scale) => map(multiplier(size), scale)
-
-const srcsetByScale = (size, scale) => {
-  let sz = size
-  if (Array.isArray(size)) {
-    sz = zipObj(['width', 'height'])(size)
-  }
-  return generateScale(sz, scale)
-}
 */

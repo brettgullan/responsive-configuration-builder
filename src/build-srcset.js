@@ -1,22 +1,14 @@
-import { __, compose, map, multiply, zipObj } from 'ramda'
+import { __, compose, map, multiply, useWith } from 'ramda'
 
 //-----------------------------------------------------------------------------
 
-/*
-export const buildSrcSet = (srcset, urlFormat) =>
-  srcset.map((src) => {
-    if (typeof src === 'string') {
-      return src // src entry is a literal string; don't process it.
-    }
+import {
+  convertToNumericValue,
+  convertZeroToUndefined,
+  transformSizesArray,
+} from './helpers'
 
-    const dimensions = processImgSize(src)
-    const formatter = `${urlFormat} {width}w`
-
-    return formatSrcUrl(formatter, dimensions)
-  })
-
-export default buildSrcSet
-*/
+//-----------------------------------------------------------------------------
 
 const multiplier = (size) =>
   compose(
@@ -24,15 +16,23 @@ const multiplier = (size) =>
     multiply,
   )
 
-const generateScale = (size, scale) => map(multiplier(size), scale)
+export const generateSizesForScale = (size, scale) =>
+  map(multiplier(size), scale)
 
-export const srcsetByScale = (size, scale) => {
-  let sz = size
-  if (Array.isArray(size)) {
-    sz = zipObj(['width', 'height'])(size)
-  }
-  return generateScale(sz, scale)
-}
+// Most of this function is parsing and data normalization.
+// Use the function above, if confident of input formats and values.
+export const srcsetByScale = compose(
+  map(map(convertZeroToUndefined)),
+  useWith(generateSizesForScale, [
+    compose(
+      transformSizesArray,
+      map(convertToNumericValue),
+    ),
+    map(convertToNumericValue),
+  ]),
+)
+
+//-----------------------------------------------------------------------------
 
 export default {
   srcsetByScale,
