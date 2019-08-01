@@ -35,7 +35,7 @@ describe('sizesForScale', () => {
     const size = { width: 240, height: 180 }
     const scale = [1, 1.5, 2, 3]
 
-    expect(buildSizesForScale(size, scale)).to.deep.equal(expected)
+    expect(buildSizesForScale({ size, scale })).to.deep.equal(expected)
   })
 
   it('should build a size array for given size (object) and scale', () => {
@@ -49,7 +49,7 @@ describe('sizesForScale', () => {
     const size = [240, 180]
     const scale = [1, 1.5, 2, 3]
 
-    const result = buildSrcSet.buildSizesForScale(size, scale)
+    const result = buildSrcSet.buildSizesForScale({ size, scale })
     expect(result).to.deep.equal(expected)
   })
 
@@ -57,14 +57,14 @@ describe('sizesForScale', () => {
     const size = { width: '240px', height: '180px' }
     const scale = [1, 1.5, 2, 3]
 
-    expect(buildSizesForScale(size, scale)).to.deep.equal(expected)
+    expect(buildSizesForScale({ size, scale })).to.deep.equal(expected)
   })
 
   it('should build a size array when sizes are unparseable strings', () => {
     const size = { width: 'unparseable', height: 'unparseable' }
     const scale = [1, 1.5, 2, 3]
 
-    const result = buildSizesForScale(size, scale)
+    const result = buildSizesForScale({ size, scale })
     const expected = [
       {
         height: undefined,

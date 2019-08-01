@@ -3,78 +3,62 @@ import { __, compose, map, multiply, identity, useWith } from 'ramda'
 //-----------------------------------------------------------------------------
 
 import { evaluateRatio } from './evaluate-ratio'
-import {
-  convertToNumericValue,
-  convertZeroToUndefined,
-  transformSizesArray,
-} from './helpers'
+import { convertToNumberOrUndefined, transformSizesArray } from './helpers'
 
 //-----------------------------------------------------------------------------
 
-const resolveSizeWithScale = (size) =>
-  compose(
-    map(__, size),
-    multiply,
-  )
+export const generateSizeForScale = (size, scale, lenient = false) => {
+  const sc = lenient ? convertToNumberOrUndefined(scale) : scale
+  return map((v) => {
+    const sz = lenient ? convertToNumberOrUndefined(v) : v
+    return sz && sc ? sz * sc : undefined
+  }, transformSizesArray(size))
+}
 
-export const generateSizesForScale = (size, scale) =>
-  map(resolveSizeWithScale(size), scale)
+export const generateSizesForScale = (size, scale, lenient = false) =>
+  map((s) => generateSizeForScale(size, s, lenient), scale)
 
-// Most of this function is parsing and data normalization.
-// Use the function above, if confident of input formats and values.
-export const buildSizesForScale = compose(
-  map(map(convertZeroToUndefined)),
-  useWith(generateSizesForScale, [
-    compose(
-      transformSizesArray,
-      map(convertToNumericValue),
-    ),
-    map(convertToNumericValue),
-  ]),
-)
+export const buildSizesForScale = ({ size, scale }) =>
+  generateSizesForScale(size, scale, true)
 
 //-----------------------------------------------------------------------------
 
-const resolveSizeWithRatio = (width, ratio) => ({
-  width,
-  height: ratio ? Math.round(width / ratio) : 0,
-})
+export const generateSizeForRatio = (width, ratio, lenient = false) => {
+  const w = lenient ? convertToNumberOrUndefined(width) : width
+  const r = lenient ? evaluateRatio(ratio) : ratio
 
-export const generateSizesForRatio = (widths, ratio) =>
-  map((width) => resolveSizeWithRatio(width, ratio), widths)
+  return {
+    width: w,
+    height: w && r ? Math.round(w / r) : undefined,
+  }
+}
+
+export const generateSizesForRatio = (widths, ratio, lenient = false) =>
+  map((width) => generateSizeForRatio(width, ratio, lenient), widths)
 
 export const buildSizesForRatio = ({
   widths,
   ratio,
   aspectRatio,
   'aspect-ratio': ar,
-}) =>
-  useWith(
-    compose(
-      map(map(convertZeroToUndefined)),
-      (widths, ratio) => generateSizesForRatio(widths, ratio),
-    ),
-    [map(convertToNumericValue), evaluateRatio],
-  )(widths, ratio || aspectRatio || ar)
+}) => generateSizesForRatio(widths, ratio || aspectRatio || ar, true)
 
 //-----------------------------------------------------------------------------
 
-export const generateRatiosForRatio = (widths, ratio) =>
-  map((width) => ({ width, ratio }), widths)
+export const generateRatioForRatio = (width, ratio, lenient = false) => ({
+  width: lenient ? convertToNumberOrUndefined(width) : width,
+  ratio,
+})
+
+export const generateRatiosForRatio = (widths, ratio, lenient = false) =>
+  map((width) => generateRatioForRatio(width, ratio, lenient), widths)
 
 export const buildRatiosForRatio = ({
   widths,
   ratio,
   aspectRatio,
   'aspect-ratio': ar,
-}) =>
-  useWith(
-    compose(
-      map(map(convertZeroToUndefined)),
-      (widths, ratio) => generateRatiosForRatio(widths, ratio),
-    ),
-    [map(convertToNumericValue), identity],
-  )(widths, ratio || aspectRatio || ar)
+}) => generateRatiosForRatio(widths, ratio || aspectRatio || ar, true)
 
 //-----------------------------------------------------------------------------
 
