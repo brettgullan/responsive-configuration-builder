@@ -3,6 +3,11 @@ import { convertToNumericValue } from './helpers'
 
 //-----------------------------------------------------------------------------
 
+const _resolveSize = ({ width, height, ratio }) => ({
+  width,
+  height: height || ratio ? Math.round(width / ratio) : 0,
+})
+
 /**
  * Resolves a 'size' object given an input object containing `width`
  * and either `height` or `ratio` fields.
@@ -31,10 +36,10 @@ export const resolveSize = ({
 }) => {
   const w = convertToNumericValue(width)
   const h = convertToNumericValue(height)
-  const r = ratio || aspectRatio || ar
+  const r = evaluateRatio(ratio || aspectRatio || ar)
   return {
-    width: w,
-    height: h || (w ? Math.round(w * evaluateRatio(r)) : undefined),
+    width: w ? w : undefined,
+    height: h || (w && r ? Math.round(w / r) : undefined),
   }
 }
 
