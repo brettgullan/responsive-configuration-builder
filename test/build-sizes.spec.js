@@ -7,7 +7,7 @@ import buildSrcSet, {
   generateRatiosForRatio,
   buildSizesForRatio,
   buildRatiosForRatio,
-} from '../src/build-srcset'
+} from '../src/build-sizes'
 
 //-----------------------------------------------------------------------------
 
