@@ -1,6 +1,7 @@
 /* global expect */
 
 import buildSrcSet, {
+  generateSizeForSize,
   buildSizesForScale,
   generateSizesForScale,
   generateSizesForRatio,
@@ -201,5 +202,21 @@ describe('ratiosForRatio', () => {
     expect(buildRatiosForRatio({ widths, aspectRatio: ratio })).to.deep.equal(
       expected,
     )
+  })
+})
+
+//-----------------------------------------------------------------------------
+
+describe('sizeForSize', () => {
+  const expected = {
+    height: 180,
+    width: 320,
+  }
+
+  it('builds a size object for given width/height spec', () => {
+    const width = '320px'
+    const height = '180px'
+
+    expect(generateSizeForSize(width, height)).to.deep.equal(expected)
   })
 })

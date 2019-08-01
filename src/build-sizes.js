@@ -7,6 +7,13 @@ import { convertToNumberOrUndefined, transformSizesArray } from './helpers'
 
 //-----------------------------------------------------------------------------
 
+export const generateSizeForSize = (width, height) => ({
+  width: convertToNumberOrUndefined(width),
+  height: convertToNumberOrUndefined(height),
+})
+
+//-----------------------------------------------------------------------------
+
 export const generateSizeForScale = (size, scale, lenient = false) => {
   const sc = lenient ? convertToNumberOrUndefined(scale) : scale
   return map((v) => {
@@ -44,6 +51,8 @@ export const buildSizesForRatio = ({
 }) => generateSizesForRatio(widths, ratio || aspectRatio || ar, true)
 
 //-----------------------------------------------------------------------------
+// Probably don't need these methods.
+// Can replace with just a simple widths expander.
 
 export const generateRatioForRatio = (width, ratio, lenient = false) => ({
   width: lenient ? convertToNumberOrUndefined(width) : width,
