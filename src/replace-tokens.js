@@ -1,6 +1,7 @@
 import {
   call,
   compose,
+  curry,
   flip,
   mapObjIndexed,
   reduce,
@@ -34,10 +35,11 @@ const expandTokensUsing = (resolver) =>
  * @param {Object} tokens
  * @return {String} expanded template with all tokens replaced
  */
-const expandTokenizedString = (template, tokens) =>
+const expandTokenizedString = curry((template, tokens) =>
   compose(
     reduce(flip(call), template),
     expandTokensUsing(replaceForKey),
-  )(tokens)
+  )(tokens),
+)
 
 export default expandTokenizedString
