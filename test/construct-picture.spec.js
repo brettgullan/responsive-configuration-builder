@@ -4,8 +4,50 @@ import { constructImage } from '../src/construct-picture'
 
 //-----------------------------------------------------------------------------
 
-describe.only('Construct Image', () => {
-  it('given an image data object, specification and url template, build a final image props object', () => {
+describe('Construct Image', () => {
+  it.only('correctly build src', () => {
+    const spec = {
+      src: {
+        width: '240px',
+        ratio: '16 / 9',
+        options: {
+          quality: 50,
+        },
+      },
+      sizes: '50vw',
+
+      options: {
+        crop: 'auto',
+      },
+    }
+
+    const url =
+      'https://picsum.photos/id/{id}/{width}/{height}?q={quality}&crop={crop}'
+
+    const image = {
+      id: 128,
+      quality: 80,
+      attrs: {
+        alt: 'This is an alt tag.',
+      },
+    }
+
+    // ----------------------------------------
+
+    const expected = {
+      src: `https://picsum.photos/id/128/240/135?q=50&crop=auto`,
+      sizes: '50vw',
+      alt: 'This is an alt tag.',
+    }
+
+    // ----------------------------------------
+
+    const result = constructImage(spec, url, image)
+
+    expect(result).to.deep.equal(expected)
+  })
+
+  it('correctly build srcset', () => {
     const spec = {
       src: {
         width: '240px',
@@ -27,8 +69,11 @@ describe.only('Construct Image', () => {
       },
       sizes: '50vw',
 
-      // These options will apply to any src or srcSet spec
-      // unless overridden.
+      // These options will apply to any src or srcset spec unless overridden.
+      // Options have the following priority:
+      // 1. Options specified on a spec element (src or srcset);
+      // 2. Specified at top-level of spec object;
+      // 3. Specified on image object;
       options: {
         crop: 'auto',
       },
@@ -36,12 +81,12 @@ describe.only('Construct Image', () => {
 
     const url = `https://picsum.photos/id/{id}/{width}/{height}`
 
-    const img = {
+    const image = {
       id: 128,
-      type: 'picsum',
-      alt: 'This is a description of image 128!',
-      width: 3600,
-      height: 2700,
+      // type: 'picsum',
+      // alt: 'This is a description of image 128!',
+      // width: 3600,
+      // height: 2700,
     }
 
     // ----------------------------------------
@@ -66,10 +111,10 @@ describe.only('Construct Image', () => {
 
     // ----------------------------------------
 
-    const result = constructImage(url, spec)
+    const result = constructImage(spec, url, image)
 
     console.log(result)
 
-    expect(result).to.equal(expected)
+    expect(result).to.deep.equal(expected)
   })
 })
