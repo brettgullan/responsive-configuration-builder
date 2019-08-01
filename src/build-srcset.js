@@ -46,3 +46,5 @@ export const buildSrcSet = curry((url, tokens, { options, ...spec }) =>
     ]),
   )(spec),
 )
+
+export default buildSrcSet
