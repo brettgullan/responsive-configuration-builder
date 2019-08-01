@@ -9,19 +9,10 @@ import { always, compose, equals, when, zipObj } from 'ramda'
  * @param {String|Number} size value to convert as string (or number)
  * @return {Number} size value parsed to number
  */
-export const convertToNumericValue = compose(
-  when(Number.isNaN, always(0)),
+export const convertToNumberOrUndefined = compose(
+  when(Number.isNaN, always(undefined)),
   parseFloat,
 )
-
-/**
- * Convert values of zero to `undefined`.
- * All other values are returned.
- *
- * @param {Number} value to convert (if zero)
- * @return {Number|undefined} input value, or undefined if zero
- */
-export const convertZeroToUndefined = when(equals(0), always(undefined))
 
 //-----------------------------------------------------------------------------
 

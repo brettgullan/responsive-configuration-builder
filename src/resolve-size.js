@@ -1,5 +1,5 @@
 import { evaluateRatio } from './evaluate-ratio'
-import { convertToNumericValue } from './helpers'
+import { convertToNumberOrUndefined } from './helpers'
 
 //-----------------------------------------------------------------------------
 
@@ -34,11 +34,11 @@ export const resolveSize = ({
   aspectRatio,
   'aspect-ratio': ar,
 }) => {
-  const w = convertToNumericValue(width)
-  const h = convertToNumericValue(height)
+  const w = convertToNumberOrUndefined(width)
+  const h = convertToNumberOrUndefined(height)
   const r = evaluateRatio(ratio || aspectRatio || ar)
   return {
-    width: w ? w : undefined,
+    width: w,
     height: h || (w && r ? Math.round(w / r) : undefined),
   }
 }
