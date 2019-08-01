@@ -1,5 +1,5 @@
-const ratioCaseRegex = /^\d+:\d+$/
-const fractionalCaseRegex = /^\d+\/\d+$/
+const ratioCaseRegex = /^(\d+)\s?:\s?(\d+)$/
+const fractionalCaseRegex = /^(\d+)\s?\/\s?(\d+)$/
 
 //-----------------------------------------------------------------------------
 
@@ -32,15 +32,15 @@ export const evaluateRatio = (ratio) => {
   }
 
   // ratio case (width:height)
-  if (candidate.search(ratioCaseRegex) > -1) {
-    const [a, b] = candidate.split(':')
-    return a / b
+  if (ratioCaseRegex.test(candidate)) {
+    const result = ratioCaseRegex.exec(candidate)
+    return result[1] / result[2]
   }
 
   // fractional case (width/height)
-  if (candidate.search(fractionalCaseRegex) > -1) {
-    const [a, b] = candidate.split('/')
-    return a / b
+  if (fractionalCaseRegex.test(candidate)) {
+    const result = fractionalCaseRegex.exec(candidate)
+    return result[1] / result[2]
   }
 
   // wtf?

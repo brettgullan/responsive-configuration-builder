@@ -21,14 +21,16 @@ describe('evaluateRatio', () => {
   })
 
   it('should handle fraction as strings', () => {
+    expect(evaluateRatio('16 / 9')).to.eql(16 / 9)
     expect(evaluateRatio('16/9')).to.eql(16 / 9)
   })
 
   it('should handle ratios', () => {
+    expect(evaluateRatio('4 : 3')).to.equal(4 / 3)
     expect(evaluateRatio('4:3')).to.equal(4 / 3)
   })
 
-  it('non-numeric values resolve to 0', () => {
+  it('non-numeric values resolve to undefined', () => {
     expect(evaluateRatio('some thing else')).to.equal(undefined)
   })
 
