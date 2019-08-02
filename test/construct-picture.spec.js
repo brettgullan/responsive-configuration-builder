@@ -4,8 +4,8 @@ import { constructImage } from '../src/construct-picture'
 
 //-----------------------------------------------------------------------------
 
-describe('Construct Image', () => {
-  it.only('correctly build src', () => {
+describe.only('Construct Image', () => {
+  it('correctly builds src', () => {
     const spec = {
       src: {
         width: '240px',
@@ -27,9 +27,6 @@ describe('Construct Image', () => {
     const image = {
       id: 128,
       quality: 80,
-      attrs: {
-        alt: 'This is an alt tag.',
-      },
     }
 
     // ----------------------------------------
@@ -37,7 +34,6 @@ describe('Construct Image', () => {
     const expected = {
       src: `https://picsum.photos/id/128/240/135?q=50&crop=auto`,
       sizes: '50vw',
-      alt: 'This is an alt tag.',
     }
 
     // ----------------------------------------
@@ -47,7 +43,57 @@ describe('Construct Image', () => {
     expect(result).to.deep.equal(expected)
   })
 
-  it('correctly build srcset', () => {
+  it('correctly builds srcset', () => {
+    const spec = {
+      srcset: {
+        widths: ['240px', 320, 480],
+        ratio: '16 / 9',
+        options: {
+          quality: 50,
+        },
+      },
+      sizes: '50vw',
+
+      // These options will apply to any src or srcset spec unless overridden.
+      // Options have the following priority:
+      // 1. Options specified on a spec element (src or srcset);
+      // 2. Specified at top-level of spec object;
+      // 3. Specified on image object;
+      options: {
+        crop: 'auto',
+      },
+    }
+
+    const url = `https://picsum.photos/id/{id}/{width}/{height}?q={quality}&crop={crop}`
+
+    const image = {
+      id: 128,
+      quality: 80,
+    }
+
+    // ----------------------------------------
+
+    const srcset = [
+      'https://picsum.photos/id/128/240/135?q=50&crop=auto 240w',
+      'https://picsum.photos/id/128/320/180?q=50&crop=auto 320w',
+      'https://picsum.photos/id/128/480/270?q=50&crop=auto 480w',
+    ].join(', ')
+
+    const expected = {
+      srcset,
+      sizes: '50vw',
+    }
+
+    // ----------------------------------------
+
+    const result = constructImage(spec, url, image)
+
+    console.log(result)
+
+    expect(result).to.deep.equal(expected)
+  })
+
+  it.skip('correctly builds placeholder', () => {
     const spec = {
       src: {
         width: '240px',
