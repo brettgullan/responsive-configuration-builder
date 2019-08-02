@@ -1,4 +1,4 @@
-import { compose, curry, evolve, is, merge, when } from 'ramda'
+import { compose, curry, evolve, is, map, merge, when } from 'ramda'
 
 //-----------------------------------------------------------------------------
 
@@ -17,11 +17,28 @@ import buildSrcSet from './build-srcset'
 
 export const constructImage = curry(({ options, ...spec }, template, image) =>
   evolve({
-    src: when(is(Object), buildSrc(template, Object.assign(image, options))),
-    srcset: when(
-      is(Object),
-      buildSrcSet(template, Object.assign(image, options)),
+    src: when(is(Object), buildSrc(template, merge(image, options))),
+    srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
+  })(spec),
+)
+
+//-----------------------------------------------------------------------------
+
+export const constructPicture = curry(({ options, ...spec }, template, image) =>
+  evolve({
+    sources: map(
+      evolve({
+        srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
+      }),
     ),
+
+    img: evolve({
+      src: when(is(Object), buildSrc(template, merge(image, options))),
+      srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
+    }),
+
+    src: when(is(Object), buildSrc(template, merge(image, options))),
+    srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
   })(spec),
 )
 
