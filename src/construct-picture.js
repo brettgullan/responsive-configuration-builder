@@ -7,6 +7,14 @@ import buildSrcSet from './build-srcset'
 
 //-----------------------------------------------------------------------------
 
+// const handleImageSrc = (template, tokens) =>
+//   when(is(Object), buildSrc(template, tokens))
+
+// const handleImageSrcSet = (template, tokens) =>
+//   when(is(Object), buildSrcSet(template, tokens))
+
+//-----------------------------------------------------------------------------
+
 export const constructImage = curry(({ options, ...spec }, template, image) =>
   evolve({
     src: when(is(Object), buildSrc(template, Object.assign(image, options))),
