@@ -2,8 +2,7 @@ import { compose, curry, evolve, is, map, merge, when } from 'ramda'
 
 //-----------------------------------------------------------------------------
 
-import buildSrc from './build-src'
-import buildSrcSet from './build-srcset'
+import { buildSrcSet, buildSrc } from './builders'
 
 //-----------------------------------------------------------------------------
 

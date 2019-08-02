@@ -1,7 +1,6 @@
 export { constructImage, constructPicture } from './construct-picture'
 
-export { buildSrcSet } from './build-srcset'
-export { buildSrc } from './build-src'
+export { buildSrcSet, buildSrc } from './builders'
 
 export { evaluateRatio } from './evaluate-ratio'
 
@@ -18,10 +17,7 @@ export {
 //-----------------------------------------------------------------------------
 
 import { constructImage, constructPicture } from './construct-picture'
-
-import { buildSrcSet } from './build-srcset'
-import { buildSrc } from './build-src'
-
+import { buildSrcSet, buildSrc } from './builders'
 import { evaluateRatio } from './evaluate-ratio'
 
 import {
