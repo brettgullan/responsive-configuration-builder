@@ -4,7 +4,7 @@ import { buildSrc } from '../src/build-src'
 
 //-----------------------------------------------------------------------------
 
-describe.only('Build Src', () => {
+describe('Build Src', () => {
   const url = `https://picsum.photos/id/{id}/{width}/{height}?q={quality}&crop={crop}`
   const tokens = {
     id: 128,

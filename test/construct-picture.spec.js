@@ -4,7 +4,7 @@ import { constructImage } from '../src/construct-picture'
 
 //-----------------------------------------------------------------------------
 
-describe.only('Construct Image', () => {
+describe('Construct Image', () => {
   it('correctly builds src', () => {
     const spec = {
       src: {
