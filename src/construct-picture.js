@@ -7,20 +7,11 @@ import buildSrcSet from './build-srcset'
 
 //-----------------------------------------------------------------------------
 
-// const handleImageSrc = (template, tokens) =>
-//   when(is(Object), buildSrc(template, tokens))
+const handleImageSrc = (template, tokens) =>
+  when(is(Object), buildSrc(template, tokens))
 
-// const handleImageSrcSet = (template, tokens) =>
-//   when(is(Object), buildSrcSet(template, tokens))
-
-//-----------------------------------------------------------------------------
-
-export const constructImage = curry(({ options, ...spec }, template, image) =>
-  evolve({
-    src: when(is(Object), buildSrc(template, merge(image, options))),
-    srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
-  })(spec),
-)
+const handleImageSrcSet = (template, tokens) =>
+  when(is(Object), buildSrcSet(template, tokens))
 
 //-----------------------------------------------------------------------------
 
@@ -28,19 +19,23 @@ export const constructPicture = curry(({ options, ...spec }, template, image) =>
   evolve({
     sources: map(
       evolve({
-        srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
+        srcset: handleImageSrcSet(template, merge(image, options)),
       }),
     ),
 
     img: evolve({
-      src: when(is(Object), buildSrc(template, merge(image, options))),
-      srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
+      src: handleImageSrc(template, merge(image, options)),
+      srcset: handleImageSrcSet(template, merge(image, options)),
     }),
 
-    src: when(is(Object), buildSrc(template, merge(image, options))),
-    srcset: when(is(Object), buildSrcSet(template, merge(image, options))),
+    src: handleImageSrc(template, merge(image, options)),
+    srcset: handleImageSrcSet(template, merge(image, options)),
   })(spec),
 )
+
+//-----------------------------------------------------------------------------
+
+export const constructImage = constructPicture
 
 /*
 export const constructImage = curry(
