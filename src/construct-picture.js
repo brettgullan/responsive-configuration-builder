@@ -20,22 +20,27 @@ export const constructPicture = curry(({ options, ...spec }, template, image) =>
     sources: map(
       evolve({
         srcset: handleImageSrcSet(template, merge(image, options)),
+        srcSet: handleImageSrcSet(template, merge(image, options)),
       }),
     ),
 
     img: evolve({
       src: handleImageSrc(template, merge(image, options)),
       srcset: handleImageSrcSet(template, merge(image, options)),
+      srcSet: handleImageSrcSet(template, merge(image, options)),
     }),
 
     src: handleImageSrc(template, merge(image, options)),
     srcset: handleImageSrcSet(template, merge(image, options)),
+    srcSet: handleImageSrcSet(template, merge(image, options)),
   })(spec),
 )
 
 //-----------------------------------------------------------------------------
 
 export const constructImage = constructPicture
+
+export default constructPicture
 
 /*
 export const constructImage = curry(
