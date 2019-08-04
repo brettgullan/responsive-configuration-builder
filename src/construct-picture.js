@@ -1,8 +1,23 @@
-import { compose, curry, evolve, is, map, merge, when } from 'ramda'
+import {
+  compose,
+  cond,
+  curry,
+  equals,
+  evolve,
+  identity,
+  is,
+  map,
+  mapObjIndexed,
+  merge,
+  mergeDeepRight,
+  tap,
+  T,
+  when,
+} from 'ramda'
 
 //-----------------------------------------------------------------------------
 
-import { buildSrcSet, buildSrc } from './builders'
+import { buildSrcSet, buildSrc, getBuilderForSpec } from './builders'
 
 //-----------------------------------------------------------------------------
 
@@ -15,24 +30,30 @@ const handleImageSrcSet = (template, tokens) =>
 //-----------------------------------------------------------------------------
 
 export const constructPicture = curry(({ options, ...spec }, template, image) =>
-  evolve({
-    sources: map(
-      evolve({
-        srcset: handleImageSrcSet(template, merge(image, options)),
-        srcSet: handleImageSrcSet(template, merge(image, options)),
-      }),
-    ),
+  mapObjIndexed(
+    cond([
+      [
+        (sources, key) => equals('sources', key),
+        map((source) =>
+          constructPicture({ ...source, options }, template, image),
+        ),
+      ],
 
-    img: evolve({
-      src: handleImageSrc(template, merge(image, options)),
-      srcset: handleImageSrcSet(template, merge(image, options)),
-      srcSet: handleImageSrcSet(template, merge(image, options)),
-    }),
+      [
+        (img, key) => equals('img', key),
+        (img) => constructPicture({ ...img, options }, template, image),
+      ],
 
-    src: handleImageSrc(template, merge(image, options)),
-    srcset: handleImageSrcSet(template, merge(image, options)),
-    srcSet: handleImageSrcSet(template, merge(image, options)),
-  })(spec),
+      [
+        is(Object),
+        (value, key) => {
+          console.log('Processing ...', key)
+        },
+      ],
+
+      [T, (value) => value],
+    ]),
+  )(spec),
 )
 
 //-----------------------------------------------------------------------------

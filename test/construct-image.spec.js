@@ -5,9 +5,16 @@ import { constructImage } from '../src/construct-picture'
 //-----------------------------------------------------------------------------
 
 describe('Construct Image', () => {
-  it('correctly builds src', () => {
+  it.only('correctly builds src', () => {
     const spec = {
       src: {
+        width: '240px',
+        ratio: '16 / 9',
+        options: {
+          quality: 50,
+        },
+      },
+      placeholder: {
         width: '240px',
         ratio: '16 / 9',
         options: {
