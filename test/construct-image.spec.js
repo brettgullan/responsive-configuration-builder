@@ -5,7 +5,7 @@ import { constructImage } from '../src/construct-picture'
 //-----------------------------------------------------------------------------
 
 describe('Construct Image', () => {
-  it.only('correctly builds src', () => {
+  it('correctly builds src', () => {
     const spec = {
       src: {
         width: '240px',
@@ -18,7 +18,7 @@ describe('Construct Image', () => {
         width: '240px',
         ratio: '16 / 9',
         options: {
-          quality: 50,
+          quality: 75,
         },
       },
       sizes: '50vw',
@@ -39,13 +39,14 @@ describe('Construct Image', () => {
     // ----------------------------------------
 
     const expected = {
+      placeholder: `https://picsum.photos/id/128/240/135?q=75&crop=auto`,
       src: `https://picsum.photos/id/128/240/135?q=50&crop=auto`,
       sizes: '50vw',
     }
 
     // ----------------------------------------
 
-    const result = constructImage(spec, template, image)
+    const result = constructImage(template, spec, image)
 
     expect(result).to.deep.equal(expected)
   })
@@ -95,7 +96,7 @@ describe('Construct Image', () => {
 
     // ----------------------------------------
 
-    const result = constructImage(spec, template, image)
+    const result = constructImage(template, spec, image)
 
     // console.log(result)
 

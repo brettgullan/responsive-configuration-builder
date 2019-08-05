@@ -4,7 +4,7 @@ import { constructPicture } from '../src/construct-picture'
 
 //-----------------------------------------------------------------------------
 
-describe('Build Picture', () => {
+describe('Construct Picture', () => {
   it('given an image data object, picture specification and url template, build a final picture props object', () => {
     // Example of the kind of specification that might be generated
     // within a template or view layer, and combined with instance data (see below)
@@ -44,6 +44,13 @@ describe('Build Picture', () => {
           ratio: '16 / 9',
           options: {
             quality: 50,
+          },
+        },
+        'data-src': {
+          width: '240px',
+          ratio: '16 / 9',
+          options: {
+            quality: 70,
           },
         },
         srcset: {
@@ -96,6 +103,7 @@ describe('Build Picture', () => {
       ],
       img: {
         src: 'https://picsum.photos/id/128/240/135?q=50&crop=auto',
+        'data-src': 'https://picsum.photos/id/128/240/135?q=70&crop=auto',
 
         // Note the missing {quality} token below!
         srcset: [
@@ -109,7 +117,7 @@ describe('Build Picture', () => {
 
     // ----------------------------------------
 
-    const result = constructPicture(spec, template, image)
+    const result = constructPicture(template, spec, image)
 
     // console.log(result)
 
