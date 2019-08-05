@@ -14,6 +14,13 @@ describe('Construct Image', () => {
           quality: 50,
         },
       },
+      placeholder: {
+        width: '240px',
+        ratio: '16 / 9',
+        options: {
+          quality: 75,
+        },
+      },
       sizes: '50vw',
 
       options: {
@@ -32,13 +39,14 @@ describe('Construct Image', () => {
     // ----------------------------------------
 
     const expected = {
+      placeholder: `https://picsum.photos/id/128/240/135?q=75&crop=auto`,
       src: `https://picsum.photos/id/128/240/135?q=50&crop=auto`,
       sizes: '50vw',
     }
 
     // ----------------------------------------
 
-    const result = constructImage(spec, template, image)
+    const result = constructImage(template, spec, image)
 
     expect(result).to.deep.equal(expected)
   })
@@ -88,7 +96,7 @@ describe('Construct Image', () => {
 
     // ----------------------------------------
 
-    const result = constructImage(spec, template, image)
+    const result = constructImage(template, spec, image)
 
     // console.log(result)
 

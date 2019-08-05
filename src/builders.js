@@ -4,10 +4,12 @@ import {
   cond,
   curry,
   defaultTo,
+  is,
   isEmpty,
   join,
   map,
-  T,
+  merge,
+  tap,
   when,
 } from 'ramda'
 
@@ -23,7 +25,7 @@ import replaceTokens from './replace-tokens'
 
 //-----------------------------------------------------------------------------
 
-export const getBuilderForSpec = cond([
+const buildSizesForSpec = cond([
   [
     ({ widths, ratio }) => widths && ratio,
     ({ widths, ratio }) => generateSizesForRatio(widths, ratio, true),
@@ -45,38 +47,41 @@ export const getBuilderForSpec = cond([
 
 //-----------------------------------------------------------------------------
 
-export const buildSrcSet = curry((url, tokens, { options, ...spec }) =>
+const formatForSize = (url, tokens) =>
   compose(
-    // Return undefined (as error code) if result is empty string
+    replaceTokens(url),
+    merge(tokens),
+  )
+
+//-----------------------------------------------------------------------------
+
+export const buildSpec = curry((url, tokens, { options, ...spec }) =>
+  compose(
+    // Return undefined (as error code) if final result is empty string
     when(isEmpty, always(undefined)),
 
-    // Collapse into final comma-separated srcSet string
-    join(', '),
+    cond([
+      // Handle arrays -- i.e. srcSet format
+      [
+        is(Array),
+        compose(
+          // Collapse into final comma-separated srcSet string
+          join(', '),
 
-    // Build individual src/descriptor strings
-    map((size) =>
-      replaceTokens(`${url} {width}w`, Object.assign(tokens, options, size)),
-    ),
+          // Build individual src/descriptor strings
+          map(formatForSize(`${url} {width}w`, merge(tokens, options))),
+        ),
+      ],
 
-    // Generate size object array using appropriate function
-    // Invalid specs will result in empty array
-    defaultTo([]),
-    getBuilderForSpec,
+      // Handle single object -- i.e. src format
+      [is(Object), formatForSize(url, merge(tokens, options))],
+    ]),
+
+    buildSizesForSpec,
   )(spec),
 )
 
 //-----------------------------------------------------------------------------
 
-export const buildSrc = curry((url, tokens, { options, ...spec }) =>
-  compose(
-    // Return undefined (as error code) if result is empty string
-    when(isEmpty, always(undefined)),
-
-    // Build src string
-    (size) => replaceTokens(url, Object.assign(tokens, options, size)),
-
-    // Generate size object using appropriate function.
-    defaultTo({}),
-    getBuilderForSpec,
-  )(spec),
-)
+export const buildSrcSet = buildSpec
+export const buildSrc = buildSpec
