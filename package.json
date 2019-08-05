@@ -1,6 +1,6 @@
 {
   "name": "responsive-tools",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Utility library for generating responsive image urls, sizes, sources and srcsets.",
   "main": "index.js",
   "scripts": {
