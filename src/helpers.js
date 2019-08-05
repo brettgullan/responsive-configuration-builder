@@ -1,4 +1,4 @@
-import { always, compose, equals, when, zipObj } from 'ramda'
+import { always, compose, when, zipObj } from 'ramda'
 
 //-----------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ export const convertToNumberOrUndefined = compose(
  * @param {Arary} size array as [width, height]
  * @return {Object} size object containing width and height k/v pairs
  */
-export const transformSizesArray = when(
+export const convertSizeArrayToObject = when(
   Array.isArray,
   zipObj(['width', 'height']),
 )
