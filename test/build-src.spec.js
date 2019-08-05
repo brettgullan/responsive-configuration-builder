@@ -1,7 +1,7 @@
 /* global expect */
 
 // import { buildSrc } from '../src/build-src'
-import { buildSrc } from '../src/builders'
+import { buildSrc } from '../src/build-spec'
 
 //-----------------------------------------------------------------------------
 
