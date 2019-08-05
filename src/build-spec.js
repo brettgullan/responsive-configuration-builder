@@ -3,23 +3,21 @@ import {
   compose,
   cond,
   curry,
-  defaultTo,
   is,
   isEmpty,
   join,
   map,
   merge,
-  tap,
   when,
 } from 'ramda'
 
 //-----------------------------------------------------------------------------
 
 import {
-  generateSizesForRatio,
-  generateSizesForScale,
-  generateSizeForRatio,
-  generateSizeForSize,
+  buildSizeForSize,
+  buildSizesForScale,
+  buildSizeForRatio,
+  buildSizesForRatio,
 } from './build-sizes'
 import replaceTokens from './replace-tokens'
 
@@ -28,20 +26,20 @@ import replaceTokens from './replace-tokens'
 const buildSizesForSpec = cond([
   [
     ({ widths, ratio }) => widths && ratio,
-    ({ widths, ratio }) => generateSizesForRatio(widths, ratio, true),
+    ({ widths, ratio }) => buildSizesForRatio(widths, ratio, true),
   ],
   [
     ({ size, scale }) => size && scale,
-    ({ size, scale }) => generateSizesForScale(size, scale, true),
+    ({ size, scale }) => buildSizesForScale(size, scale, true),
   ],
 
   [
     ({ width, ratio }) => width && ratio,
-    ({ width, ratio }) => generateSizeForRatio(width, ratio, true),
+    ({ width, ratio }) => buildSizeForRatio(width, ratio, true),
   ],
   [
     ({ width, height }) => width && height,
-    ({ width, height }) => generateSizeForSize(width, height, true),
+    ({ width, height }) => buildSizeForSize(width, height, true),
   ],
 ])
 
