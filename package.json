@@ -2,7 +2,10 @@
   "name": "responsive-tools",
   "version": "0.0.3",
   "description": "Utility library for generating responsive image urls, sizes, sources and srcsets.",
-  "main": "index.js",
+  "main": "build/index.js",
+  "files": [
+    "/build"
+  ],
   "scripts": {
     "build": "neutrino build",
     "test": "neutrino test",
