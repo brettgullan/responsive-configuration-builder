@@ -6,7 +6,7 @@ Managing responsive images is tedious. Generating multi-resolution `srcset` valu
 
 This is further complicated by the various data sources typically in use. The specific responsive image (or picture) specification is usually a front-end concern. The image to be rendered will likely come from a CMS (or other data store). And the image source -- an image service such as Cloudinary -- will presumably require environment-specific formatting for domain, account id, etc.
 
-# Use
+# Usage
 
 At its simplest, `responsive-image-config` takes a URL template, a spec object and optional tokens, and generates the appropriate `src` and `srcset` URLs.
 
