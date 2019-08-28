@@ -20,7 +20,7 @@ export const constructPicture = curry((template, { options, ...spec }, image) =>
     cond([
       // Map over `sources` array, recursively calling `constructPicture` to process.
       [
-        (sources, key) => equals('sources', key),
+        (__, key) => equals('sources', key),
         map((source) =>
           constructPicture(template, { ...source, options }, image),
         ),
@@ -28,7 +28,7 @@ export const constructPicture = curry((template, { options, ...spec }, image) =>
 
       // Handle `img` object by recursively calling `constructPicture` to process.
       [
-        (img, key) => equals('img', key),
+        (__, key) => equals('img', key),
         (img) => constructPicture(template, { ...img, options }, image),
       ],
 
