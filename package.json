@@ -22,6 +22,7 @@
     "@neutrinojs/library": "^8.3.0",
     "@neutrinojs/mocha": "^8.3.0",
     "chai": "^4.2.0",
+    "cloudinary-core": "^2.7.4",
     "neutrino": "^8.3.0"
   },
   "dependencies": {

@@ -1,46 +1,45 @@
-import { cond, curry, equals, is, map, mapObjIndexed, merge, T } from 'ramda'
+import {
+  cond,
+  curry,
+  equals,
+  identity,
+  is,
+  map,
+  mapObjIndexed,
+  merge,
+  T,
+} from 'ramda'
 
 //-----------------------------------------------------------------------------
 
-import { buildSpec } from './build-spec'
+import resolveSpec from './build-cloudinary-spec'
 
 //-----------------------------------------------------------------------------
 
-/**
- * Process a Picture or Image spec, parsing any valid `src` or `srcset` specifications
- * into URL or URL/Descriptor strings.
- *
- * @param {String} template tokenized URL template string
- * @param {Object} specification Picture or Image spec object definition
- * @param {Object} image
- * @return {String|undefined} valid src or srcset string (or undefined)
- */
-export const expandPictureConfig = curry(
-  (template, { options, ...spec }, image) =>
+export const buildResponsiveConfig = curry(
+  (cloudinary, { options, ...spec }, image) =>
     mapObjIndexed(
       cond([
-        // Map over `sources` array, recursively calling `constructPicture` to process.
+        // Map over `sources` array, recursively calling `expandPictureConfig` to process.
         [
           (__, key) => equals('sources', key),
           map((source) =>
-            constructPicture(template, { ...source, options }, image),
+            buildResponsiveConfig(cloudinary, image, { ...source, options }),
           ),
         ],
 
-        // Process individual `src` or `srcset` spec objects
+        // Process individual spec objects.
         [
           is(Object),
-          (spec) => buildSpec(template, merge(image, options), spec),
+          (spec) => resolveSpec(cloudinary, image, merge(options, spec)),
         ],
 
         // Return all other spec values as-is.
-        [T, (value) => value],
+        [T, identity],
       ]),
     )(spec),
 )
 
 //-----------------------------------------------------------------------------
 
-export const expandImageConfig = expandPictureConfig
-
-export default expandPictureConfig
+export default buildResponsiveConfig
