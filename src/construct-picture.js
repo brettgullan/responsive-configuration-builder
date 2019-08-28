@@ -26,12 +26,6 @@ export const constructPicture = curry((template, { options, ...spec }, image) =>
         ),
       ],
 
-      // Handle `img` object by recursively calling `constructPicture` to process.
-      [
-        (img, key) => equals('img', key),
-        (img) => constructPicture(template, { ...img, options }, image),
-      ],
-
       // Process individual `src` or `srcset` spec objects
       [is(Object), (spec) => buildSpec(template, merge(image, options), spec)],
 

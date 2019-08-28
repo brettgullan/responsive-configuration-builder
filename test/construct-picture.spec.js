@@ -38,27 +38,25 @@ describe('Construct Picture', () => {
           sizes: '33vw',
         },
       ],
-      img: {
-        src: {
-          width: '240px',
-          ratio: '16 / 9',
-          options: {
-            quality: 50,
-          },
+      src: {
+        width: '240px',
+        ratio: '16 / 9',
+        options: {
+          quality: 50,
         },
-        'data-src': {
-          width: '240px',
-          ratio: '16 / 9',
-          options: {
-            quality: 70,
-          },
-        },
-        srcset: {
-          widths: ['414px', 480, 600],
-          ratio: '4:3',
-        },
-        sizes: '100vw',
       },
+      'data-src': {
+        width: '240px',
+        ratio: '16 / 9',
+        options: {
+          quality: 70,
+        },
+      },
+      srcset: {
+        widths: ['414px', 480, 600],
+        ratio: '4:3',
+      },
+      sizes: '100vw',
     }
 
     // Example image instance data.
@@ -101,18 +99,16 @@ describe('Construct Picture', () => {
           sizes: '33vw',
         },
       ],
-      img: {
-        src: 'https://picsum.photos/id/128/240/135?q=50&crop=auto',
-        'data-src': 'https://picsum.photos/id/128/240/135?q=70&crop=auto',
+      src: 'https://picsum.photos/id/128/240/135?q=50&crop=auto',
+      'data-src': 'https://picsum.photos/id/128/240/135?q=70&crop=auto',
 
-        // Note the missing {quality} token below!
-        srcset: [
-          'https://picsum.photos/id/128/414/311?q={quality}&crop=auto 414w',
-          'https://picsum.photos/id/128/480/360?q={quality}&crop=auto 480w',
-          'https://picsum.photos/id/128/600/450?q={quality}&crop=auto 600w',
-        ].join(', '),
-        sizes: '100vw',
-      },
+      // Note the missing {quality} token below!
+      srcset: [
+        'https://picsum.photos/id/128/414/311?q={quality}&crop=auto 414w',
+        'https://picsum.photos/id/128/480/360?q={quality}&crop=auto 480w',
+        'https://picsum.photos/id/128/600/450?q={quality}&crop=auto 600w',
+      ].join(', '),
+      sizes: '100vw',
     }
 
     // ----------------------------------------
