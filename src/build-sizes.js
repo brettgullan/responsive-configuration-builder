@@ -1,4 +1,4 @@
-import { __, map } from 'ramda'
+import { __, cond, map } from 'ramda'
 
 //-----------------------------------------------------------------------------
 
@@ -42,10 +42,22 @@ export const buildSizesForRatio = (widths, ratio, lenient = true) =>
 
 //-----------------------------------------------------------------------------
 
-export default {
-  buildSizeForSize,
-  buildSizeForScale,
-  buildSizesForScale,
-  buildSizeForRatio,
-  buildSizesForRatio,
-}
+export default cond([
+  [
+    ({ widths, ratio }) => widths && ratio,
+    ({ widths, ratio }) => buildSizesForRatio(widths, ratio, true),
+  ],
+  [
+    ({ size, scale }) => size && scale,
+    ({ size, scale }) => buildSizesForScale(size, scale, true),
+  ],
+
+  [
+    ({ width, ratio }) => width && ratio,
+    ({ width, ratio }) => buildSizeForRatio(width, ratio, true),
+  ],
+  [
+    ({ width, height }) => width && height,
+    ({ width, height }) => buildSizeForSize(width, height, true),
+  ],
+])

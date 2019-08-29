@@ -1,14 +1,14 @@
 /* global expect */
-
+import { map, merge } from 'ramda'
 import {
-  buildSizeForSize,
-  buildSizesForScale,
-  buildSizesForRatio,
-} from '../src/build-sizes'
+  expandSize,
+  expandSizesForScale,
+  expandWidthsForRatio,
+} from '../src/token-expander'
 
 //-----------------------------------------------------------------------------
 
-describe('buildSizesForScale', () => {
+describe('expandSizesForScale', () => {
   const expected = [
     {
       height: 180,
@@ -32,21 +32,21 @@ describe('buildSizesForScale', () => {
     const size = { width: 240, height: 180 }
     const scale = [1, 1.5, 2, 3]
 
-    expect(buildSizesForScale(size, scale)).to.deep.equal(expected)
+    expect(expandSizesForScale({ size, scale })).to.deep.equal(expected)
   })
 
   it('should build a size array for given size (object) and scale', () => {
     const size = { width: 240, height: 180 }
     const scale = [1, 1.5, 2, 3]
 
-    expect(buildSizesForScale(size, scale)).to.deep.equal(expected)
+    expect(expandSizesForScale({ size, scale })).to.deep.equal(expected)
   })
 
   it('should build a size array for given size (array) and scale', () => {
     const size = [240, 180]
     const scale = [1, 1.5, 2, 3]
 
-    const result = buildSizesForScale(size, scale)
+    const result = expandSizesForScale({ size, scale })
     expect(result).to.deep.equal(expected)
   })
 
@@ -54,14 +54,14 @@ describe('buildSizesForScale', () => {
     const size = { width: '240px', height: '180px' }
     const scale = [1, 1.5, 2, 3]
 
-    expect(buildSizesForScale(size, scale)).to.deep.equal(expected)
+    expect(expandSizesForScale({ size, scale })).to.deep.equal(expected)
   })
 
   it('should build a size array when sizes are unparseable strings', () => {
     const size = { width: 'unparseable', height: 'unparseable' }
     const scale = [1, 1.5, 2, 3]
 
-    const result = buildSizesForScale(size, scale)
+    const result = expandSizesForScale({ size, scale })
     const expected = [
       {
         height: undefined,
@@ -83,11 +83,24 @@ describe('buildSizesForScale', () => {
 
     expect(result).to.deep.equal(expected)
   })
+
+  it('passes any additional properties', () => {
+    const size = { width: '240px', height: '180px' }
+    const scale = [1, 1.5, 2, 3]
+    const options = {
+      crop: 'fill',
+      quality: 50,
+    }
+
+    expect(expandSizesForScale({ size, scale, ...options })).to.deep.equal(
+      map(merge(options), expected),
+    )
+  })
 })
 
 //-----------------------------------------------------------------------------
 
-describe('buildSizesForRatio', () => {
+describe('expandWidthsForRatio', () => {
   const expected = [
     {
       height: 135,
@@ -107,14 +120,14 @@ describe('buildSizesForRatio', () => {
     const widths = [240, 320, 480]
     const ratio = 16 / 9
 
-    expect(buildSizesForRatio(widths, ratio)).to.deep.equal(expected)
+    expect(expandWidthsForRatio({ widths, ratio })).to.deep.equal(expected)
   })
 
   it('builds a size array for given widths and (aspect) ratio', () => {
     const widths = ['240px', '320', '480']
     const ratio = '16:9'
 
-    expect(buildSizesForRatio(widths, ratio)).to.deep.equal(expected)
+    expect(expandWidthsForRatio({ widths, ratio })).to.deep.equal(expected)
   })
 
   it('builds a size array for given widths and (aspect) ratio', () => {
@@ -136,22 +149,73 @@ describe('buildSizesForRatio', () => {
       },
     ]
 
-    expect(buildSizesForRatio(widths, ratio)).to.deep.equal(expected)
+    expect(expandWidthsForRatio({ widths, ratio })).to.deep.equal(expected)
+  })
+
+  it('passes any additional properties', () => {
+    const widths = ['240px', '320', 'unparseable']
+    const ratio = '16:9'
+    const options = {
+      crop: 'fill',
+      quality: 50,
+    }
+
+    const expected = [
+      {
+        height: 135,
+        width: 240,
+        ...options,
+      },
+      {
+        height: 180,
+        width: 320,
+        ...options,
+      },
+      {
+        height: undefined,
+        width: undefined,
+        ...options,
+      },
+    ]
+
+    expect(expandWidthsForRatio({ widths, ratio, ...options })).to.deep.equal(
+      expected,
+    )
   })
 })
 
 //-----------------------------------------------------------------------------
 
-describe('buildSizeForSize', () => {
-  const expected = {
-    height: 180,
-    width: 320,
-  }
-
+describe('expandSize', () => {
   it('builds a size object for given width/height spec', () => {
-    const width = '320px'
-    const height = '180px'
+    const expected = {
+      height: 180,
+      width: 320,
+    }
 
-    expect(buildSizeForSize(width, height)).to.deep.equal(expected)
+    const fixture = {
+      width: '320px',
+      height: '180px',
+    }
+
+    expect(expandSize(fixture)).to.deep.equal(expected)
+  })
+
+  it('passes any additional properties', () => {
+    const expected = {
+      height: 180,
+      width: 320,
+      ratio: '16 / 9',
+      crop: 'fill',
+    }
+
+    const fixture = {
+      width: '320px',
+      height: '180px',
+      ratio: '16 / 9',
+      crop: 'fill',
+    }
+
+    expect(expandSize(fixture)).to.deep.equal(expected)
   })
 })
