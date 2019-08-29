@@ -1,6 +1,7 @@
 # Responsive Configuration Builder
 
-![npm](https://img.shields.io/npm/v/responsive-configuration-builder?style=for-the-badge) ![NPM](https://img.shields.io/npm/l/responsive-configuration-builder?style=for-the-badge)
+[![npm version][version-badge]][npm]
+[![MIT License][license-badge]][license]
 
 ### A set of utility functions for working with responsive images. Useful for generating image `src`, `srcset` and `sources` arrays.
 
