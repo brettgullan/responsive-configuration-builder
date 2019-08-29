@@ -1,10 +1,14 @@
 # Responsive Configuration Builder
 
+![npm](https://img.shields.io/npm/v/responsive-configuration-builder?style=for-the-badge) ![NPM](https://img.shields.io/npm/l/responsive-configuration-builder?style=for-the-badge)
+
 ### A set of utility functions for working with responsive images. Useful for generating image `src`, `srcset` and `sources` arrays.
 
-Managing responsive images is tedious. Generating multi-resolution `srcset` values for responsive images or art-directed picture elements is repetitive and laborious. On-the-fly image transformation services such as Cloudinary or Imgix have made it easy to generate responsive image derivations, but there is still a significant amount of boilerplate required in order to request them.
+Managing responsive images is tedious. Generating multi-resolution `srcset` values for responsive images or art-directed picture elements is repetitive and laborious. On-the-fly image transformation services such as Cloudinary or Imgix have made it easy to generate responsive image derivations, but there is still a significant amount of boilerplate required in order to configure the requests for them.
 
 This is further complicated by the various data sources typically in use. The specific responsive image (or picture) specification is usually a front-end concern. The image to be rendered will likely come from a CMS (or other data store). And the image source -- an image service such as Cloudinary -- will presumably require environment-specific formatting for domain, account id, etc.
+
+Responsive configuration builder uses a _spec_ object that simplifies the task of configuring multiple `src`, `srcset` and `sources` attributes, and returns a configuration object that can be easily consumed by front-end frameworks -- React, Vue, etc. -- and rendered into markup.
 
 # Usage
 
