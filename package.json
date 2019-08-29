@@ -14,7 +14,8 @@
   "keywords": [
     "responsive",
     "picture",
-    "image"
+    "image",
+    "cloudinary"
   ],
   "author": "Brett Gullan",
   "license": "MIT",
