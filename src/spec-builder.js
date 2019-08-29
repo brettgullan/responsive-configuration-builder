@@ -42,6 +42,8 @@ export default (expander, resolver) =>
         //
         [is(Object), handleSingleSpec],
       ]),
+
+      // Expand all shorthand-format spec objects
       expander,
     )(spec)
   })
