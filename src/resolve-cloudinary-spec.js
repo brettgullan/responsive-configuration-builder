@@ -25,7 +25,7 @@ import { renameKeys } from 'ramda-adjunct'
 import {
   expandWidths,
   expandWidthsAndResolutions,
-} from './build-cloudinary-sizes'
+} from './expand-cloudinary-sizes'
 import { convertToNumberOrUndefined } from './helpers'
 
 //-----------------------------------------------------------------------------

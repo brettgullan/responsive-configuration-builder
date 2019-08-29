@@ -12,7 +12,7 @@ import {
 
 //-----------------------------------------------------------------------------
 
-import resolveSpec from './build-cloudinary-spec'
+import resolveSpec from './resolve-cloudinary-spec'
 
 //-----------------------------------------------------------------------------
 

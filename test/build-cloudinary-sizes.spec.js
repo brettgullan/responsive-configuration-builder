@@ -3,7 +3,7 @@
 import {
   expandWidths,
   expandWidthsAndResolutions,
-} from '../src/build-cloudinary-sizes'
+} from '../src/expand-cloudinary-sizes'
 
 //-----------------------------------------------------------------------------
 
