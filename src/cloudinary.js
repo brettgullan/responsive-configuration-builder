@@ -16,11 +16,19 @@ import resolveSpec from './build-cloudinary-spec'
 
 //-----------------------------------------------------------------------------
 
+/**
+ * Walk the specification to locate any URL-related 'spec objects' to resolve.
+ *
+ * Any `src`, `srcset` or similar fields are expanded and resolved into
+ * the appropriate URL or URL/descriptor strings.
+ *
+ * @returns {Object} fully resolved responsive configuration object
+ */
 export const buildResponsiveConfig = curry(
   (cloudinary, { options, ...spec }, image) =>
     mapObjIndexed(
       cond([
-        // Map over `sources` array, recursively calling `expandPictureConfig` to process.
+        // Map over `sources` array, recursively calling this function to process.
         [
           (__, key) => equals('sources', key),
           map((source) =>
