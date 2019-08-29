@@ -17,7 +17,7 @@ Builders for a simple token replacer `TokenBuilder` and Cloudinary `CloudinaryBu
 ### Img src
 
 ```javascript
-import TokenBuilder from 'responsive-configuration-builder'
+import { TokenBuilder } from 'responsive-configuration-builder'
 
 const template = 'https://picsum.photos/id/{id}/{width}/{height}'
 
@@ -45,7 +45,7 @@ const result = builder(spec, image)
 ### Img srcset
 
 ```javascript
-import TokenBuilder from 'responsive-configuration-builder'
+import { TokenBuilder } from 'responsive-configuration-builder'
 
 const template = 'https://picsum.photos/id/{id}/{width}/{height}'
 
@@ -73,7 +73,7 @@ const result = builder(spec, image)
 ### Picture sources
 
 ```javascript
-import TokenBuilder from 'responsive-configuration-builder'
+import { TokenBuilder } from 'responsive-configuration-builder'
 
 const template = 'https://picsum.photos/id/{id}/{width}/{height}'
 
@@ -128,7 +128,7 @@ Responsive configuration builder also includes a Cloudinary builder that is init
 
 ```javascript
 import { Cloudinary } from 'cloudinary-core'
-import CloudinaryBuilder from 'responsive-configuration-builder'
+import { CloudinaryBuilder } from 'responsive-configuration-builder'
 
 const cloudinary = new Cloudinary({
   cloud_name: 'demo-account',
