@@ -1,4 +1,4 @@
-# Responsive Tools
+# Responsive Configuration Builder
 
 ### A set of utility functions for working with responsive images. Useful for generating image `src`, `srcset` and `sources` arrays.
 
@@ -8,12 +8,20 @@ This is further complicated by the various data sources typically in use. The sp
 
 # Usage
 
-At its simplest, `responsive-image-config` takes a URL template, a spec object and optional tokens, and generates the appropriate `src` and `srcset` URLs.
+At its simplest, `responsive-configuration-builder` uses a custom builder function, which takes a spec object and image data, and generates the appropriate `src` and `srcset` URLs.
 
-## Img src
+Builders for a simple token replacer `TokenBuilder` and Cloudinary `CloudinaryBuilder` are included.
+
+## Token Builder
+
+### Img src
 
 ```javascript
-import constructPicture from 'responsive-image-config'
+import TokenBuilder from 'responsive-configuration-builder'
+
+const template = 'https://picsum.photos/id/{id}/{width}/{height}'
+
+const builder = TokenBuilder(template)
 
 const spec = {
   src: {
@@ -22,13 +30,11 @@ const spec = {
   },
 }
 
-const template = 'https://picsum.photos/id/{id}/{width}/{height}'
-
 const image = {
   id: 128,
 }
 
-const result = constructPicture(template, spec, image)
+const result = builder(spec, image)
 
 // Result:
 // {
@@ -36,10 +42,14 @@ const result = constructPicture(template, spec, image)
 // }
 ```
 
-## Img srcset
+### Img srcset
 
 ```javascript
-import constructPicture from 'responsive-image-config'
+import TokenBuilder from 'responsive-configuration-builder'
+
+const template = 'https://picsum.photos/id/{id}/{width}/{height}'
+
+const builder = TokenBuilder(template)
 
 const spec = {
   srcset: {
@@ -48,13 +58,11 @@ const spec = {
   },
 }
 
-const template = 'https://picsum.photos/id/{id}/{width}/{height}'
-
 const image = {
   id: 128,
 }
 
-const result = constructPicture(template, spec, image)
+const result = builder(spec, image)
 
 // Result:
 // {
@@ -62,10 +70,14 @@ const result = constructPicture(template, spec, image)
 // }
 ```
 
-## Picture sources
+### Picture sources
 
 ```javascript
-import constructPicture from 'responsive-image-config'
+import TokenBuilder from 'responsive-configuration-builder'
+
+const template = 'https://picsum.photos/id/{id}/{width}/{height}'
+
+const builder = TokenBuilder(template)
 
 const spec = {
   sources: [
@@ -84,13 +96,11 @@ const spec = {
   ],
 }
 
-const template = 'https://picsum.photos/id/{id}/{width}/{height}'
-
 const image = {
   id: 128,
 }
 
-const result = constructPicture(template, spec, image)
+const result = builder(spec, image)
 
 // Result:
 // {
@@ -104,6 +114,47 @@ const result = constructPicture(template, spec, image)
 //         'https://picsum.photos/id/128/640/360 640w, https://picsum.photos/id/128/720/405 720w, https://picsum.photos/id/128/960/540 960w',
 //     },
 //   ]
+// }
+```
+
+---
+
+## Cloudinary Builder
+
+Responsive configuration builder also includes a Cloudinary builder that is initialized with a configured instance of `cloudinary-core`.
+(note: the `cloudinary-core` library is **not** included in this package).
+
+### Img src
+
+```javascript
+import { Cloudinary } from 'cloudinary-core'
+import CloudinaryBuilder from 'responsive-configuration-builder'
+
+const cloudinary = new Cloudinary({
+  cloud_name: 'demo-account',
+  secure: true,
+})
+
+const builder = CloudinaryBuilder(cloudinary)
+
+const spec = {
+  src: {
+    width: 240,
+    ratio: 16 / 9,
+    quality: 50,
+    crop: 'auto',
+  },
+}
+
+const image = {
+  id: 'test.jpg',
+}
+
+const result = builder(spec, image)
+
+// Result:
+// {
+//   src: `https://res.cloudinary.com/demo-account/image/upload/ar_1.7777,c_auto,q_50,w_240/test.jpg`,
 // }
 ```
 

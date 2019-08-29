@@ -1,5 +1,5 @@
 {
-  "name": "responsive-tools",
+  "name": "responsive-configuration-builder",
   "version": "0.0.3",
   "description": "Utility library for generating responsive image urls, sizes, sources and srcsets.",
   "main": "build/index.js",
@@ -22,9 +22,11 @@
     "@neutrinojs/library": "^8.3.0",
     "@neutrinojs/mocha": "^8.3.0",
     "chai": "^4.2.0",
+    "cloudinary-core": "^2.7.4",
     "neutrino": "^8.3.0"
   },
   "dependencies": {
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "ramda-adjunct": "^2.19.3"
   }
 }
