@@ -1,5 +1,5 @@
 {
-  "name": "responsive-tools",
+  "name": "responsive-configuration-builder",
   "version": "0.0.3",
   "description": "Utility library for generating responsive image urls, sizes, sources and srcsets.",
   "main": "build/index.js",
