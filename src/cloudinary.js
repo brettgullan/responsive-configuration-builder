@@ -1,15 +1,9 @@
-import configBuilder from './config-builder'
-import specBuilder from './spec-builder'
+import builderFactory from './builder-factory'
 
 import cloudinaryExpander from './cloudinary-expander'
 import cloudinaryResolver from './cloudinary-resolver'
 
 //-----------------------------------------------------------------------------
 
-export default (cloudinary) => {
-  const cloudinaryBuilder = specBuilder(
-    cloudinaryExpander,
-    cloudinaryResolver(cloudinary),
-  )
-  return configBuilder(cloudinaryBuilder)
-}
+export default (cloudinary) =>
+  builderFactory(cloudinaryExpander, cloudinaryResolver(cloudinary))
