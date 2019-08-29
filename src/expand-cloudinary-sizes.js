@@ -1,4 +1,4 @@
-import { map, multiply } from 'ramda'
+import { both, cond, identity, map, multiply, propIs, T } from 'ramda'
 
 //-----------------------------------------------------------------------------
 
@@ -23,3 +23,14 @@ export const expandWidthsAndResolutions = ({
   )
   return result
 }
+
+//-----------------------------------------------------------------------------
+
+export default cond([
+  [
+    both(propIs(Array, 'widths'), propIs(Array, 'resolutions')),
+    expandWidthsAndResolutions,
+  ],
+  [propIs(Array, 'widths'), expandWidths],
+  [T, identity],
+])

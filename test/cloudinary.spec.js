@@ -1,7 +1,7 @@
 /* global expect */
 import { Cloudinary } from 'cloudinary-core'
 
-import expandCloudinaryConfig from '../src/cloudinary'
+import CloudinaryBuilder from '../src/cloudinary'
 
 //-----------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ const BASE_PATH = 'https://res.cloudinary.com/demo-account/image/upload'
 
 //-----------------------------------------------------------------------------
 
-describe('Cloudinary', () => {
+describe.only('Cloudinary', () => {
   describe('Responsive Image', () => {
     it('given an image data object, picture specification and url template, build a final picture props object', () => {
       // Example of the kind of specification that might be generated
@@ -60,7 +60,8 @@ describe('Cloudinary', () => {
 
       // ----------------------------------------
 
-      const result = expandCloudinaryConfig(cloudinary, spec, image)
+      const builder = CloudinaryBuilder(cloudinary)
+      const result = builder(spec, image)
       // console.log(result)
       expect(result).to.deep.equal(expected)
     })
