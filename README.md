@@ -3,7 +3,7 @@
 ![npm](https://img.shields.io/npm/v/responsive-configuration-builder?style=flat-square)
 ![npm](https://img.shields.io/npm/l/responsive-configuration-builder?style=flat-square)
 
-### A set of utility functions for working with responsive images. Useful for generating image `src`, `srcset` and `sources` arrays.
+### A set of utility functions for working with responsive images. Generate image `src`, `srcset` and `sources` arrays from shorthand specifications.
 
 Managing responsive images is tedious. Generating multi-resolution `srcset` values for responsive images or art-directed picture elements is repetitive and laborious. On-the-fly image transformation services such as Cloudinary or Imgix have made it easy to generate responsive image derivations, but there is still a significant amount of boilerplate required in order to configure the requests for them.
 
@@ -176,3 +176,7 @@ $ npm run build
 ```
 $ npm test
 ```
+
+# License
+
+[MIT](https://github.com/brettgullan/responsive-configuration-builder/blob/master/LICENSE)
