@@ -1,7 +1,7 @@
 import configBuilder from './config-builder'
-import cloudinaryExpander from './expand-cloudinary-sizes'
+import cloudinaryExpander from './cloudinary-expander'
 import specBuilder from './spec-builder'
-import cloudinaryResolver from './resolve-cloudinary-spec'
+import cloudinaryResolver from './cloudinary-resolver'
 
 //-----------------------------------------------------------------------------
 
