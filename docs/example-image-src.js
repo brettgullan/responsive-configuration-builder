@@ -1,4 +1,7 @@
-import constructPicture from 'responsive-image-config'
+import { TokenBuilder } from 'responsive-configuration-builder'
+
+const template = 'https://picsum.photos/id/{id}/{width}/{height}'
+const builder = TokenBuilder(template)
 
 const spec = {
   src: {
@@ -7,13 +10,11 @@ const spec = {
   },
 }
 
-const template = 'https://picsum.photos/id/{id}/{width}/{height}'
-
 const image = {
   id: 128,
 }
 
-const result = constructPicture(template, spec, image)
+const result = builder(spec, image)
 
 // Result:
 // {
