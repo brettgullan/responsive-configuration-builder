@@ -11,6 +11,12 @@ This is further complicated by the various data sources typically in use. The sp
 
 Responsive configuration builder uses a _spec_ object that simplifies the task of configuring multiple `src`, `srcset` and `sources` attributes, and returns a configuration object that can be easily consumed by front-end frameworks -- React, Vue, etc. -- and rendered into markup.
 
+# Installation
+
+```bash
+$ npm install responsive-configuraiton-builder
+```
+
 # Usage
 
 At its simplest, `responsive-configuration-builder` uses a custom builder function, which takes a spec object and image data, and generates the appropriate `src` and `srcset` URLs.
