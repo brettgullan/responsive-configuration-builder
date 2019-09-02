@@ -14,7 +14,7 @@ Responsive configuration builder uses a _spec_ object that simplifies the task o
 # Installation
 
 ```bash
-$ npm install responsive-configuraiton-builder
+$ npm install responsive-configuration-builder
 ```
 
 # Usage
