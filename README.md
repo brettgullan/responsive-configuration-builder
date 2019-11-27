@@ -169,6 +169,10 @@ const result = builder(spec, image)
 // }
 ```
 
+# Configuration
+
+The configuration _spec_ objects used for each builder are not intended to be universally portable. The configuration spec for a TokenBuilder will not necessarily work for a CloudinaryBuilder (or any other custom builder). The purpose of Responsive Configuration Builder is to simplify and abstract the process of specifying image sizes. It is not intended to be a universal configuration layer. Each Builder is expected to handle the resizing requirements appropriate to its target platform or service (and to pass through any unrecognized options/paramters).
+
 # Development
 
 ## Build
