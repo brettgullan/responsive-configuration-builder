@@ -169,6 +169,44 @@ const result = builder(spec, image)
 // }
 ```
 
+---
+
+## Filestack Builder
+
+Responsive configuration builder also includes a Fielstack builder that is initialized with a tuple containing a reference to the `Filelink` class and public apiKey.
+(note: the `filestack-js` library is **not** included in this package).
+
+### Img src
+
+```javascript
+import { Filelink } from 'filestack-js'
+import { FilestackBuilder } from 'responsive-configuration-builder'
+
+const apiKey = 'sOmeAp1K3y'
+
+const builder = FilestackBuilder([Filelink, apiKey])
+
+const spec = {
+  src: {
+    width: 240,
+    ratio: 16 / 9,
+    quality: 50,
+    fit: 'crop',
+  },
+}
+
+const image = {
+  id: '50m31m4gek3y',
+}
+
+const result = builder(spec, image)
+
+// Result:
+// {
+//   src: `https://cdn.filestackcontent.com/sOmeAp1K3y/resize=width:240,height:135,fit:crop/quality=value:50/50m31m4gek3y`,
+// }
+```
+
 # Configuration
 
 The configuration _spec_ objects used for each builder are not intended to be universally portable. The configuration spec for a TokenBuilder will not necessarily work for a CloudinaryBuilder (or any other custom builder). The purpose of Responsive Configuration Builder is to simplify and abstract the process of specifying image sizes. It is not intended to be a universal configuration layer. Each Builder is expected to handle the resizing requirements appropriate to its target platform or service (and to pass through any unrecognized options/paramters).
