@@ -1,13 +1,27 @@
-import { __, compose, curry, evolve, merge, objOf, tap, when } from 'ramda'
+import {
+  __,
+  compose,
+  curry,
+  evolve,
+  invoker,
+  merge,
+  objOf,
+  pick,
+  tap,
+  when,
+} from 'ramda'
 import { isNotObj, isPlainObj, isString } from 'ramda-adjunct'
 
 //-----------------------------------------------------------------------------
 
 export default curry(([Filelink, apiKey], image, spec) =>
   compose(
-    ({ id, resize, ...rest }) => {
-      const src = new Filelink(id, apiKey)
-      src.resize(resize)
+    ({ id, ...rest }) => {
+      let src = new Filelink(id, apiKey)
+      Object.keys(rest).forEach((key) => {
+        const transformer = invoker(1, key)
+        src = transformer(rest[key], src)
+      })
       return src.toString()
     },
     ({ width, height, fit, crop, align, ...rest }) => {
