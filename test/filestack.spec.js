@@ -137,7 +137,7 @@ describe.only('Filestack', () => {
 
       const builder = FilestackBuilder([Filelink, apiKey])
       const result = builder(spec, image)
-      console.log(result)
+      // console.log(result)
       expect(result).to.deep.equal(expected)
     })
   })

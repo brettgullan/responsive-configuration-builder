@@ -1,15 +1,4 @@
-import {
-  __,
-  compose,
-  curry,
-  evolve,
-  invoker,
-  merge,
-  objOf,
-  pick,
-  tap,
-  when,
-} from 'ramda'
+import { __, compose, curry, evolve, invoker, merge, objOf, when } from 'ramda'
 import { isNotObj, isPlainObj, isString } from 'ramda-adjunct'
 
 //-----------------------------------------------------------------------------
@@ -24,7 +13,6 @@ export default curry(([Filelink, apiKey], image, spec) =>
       })
       return src.toString()
     },
-    tap(console.log),
     ({ width, height, fit, crop, align, ...rest }) => {
       let resize = {
         width,
