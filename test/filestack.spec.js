@@ -6,8 +6,6 @@ import FilestackBuilder from '../src/filestack-builder'
 //-----------------------------------------------------------------------------
 
 const apiKey = 'A341a1ygQCGfDsIiwIBWnz'
-const options = {}
-// const filestack = Filestack.init(apiKey, options)
 
 const BASE_PATH = 'https://cdn.filestackcontent.com/'
 
@@ -46,11 +44,11 @@ describe.only('Filestack', () => {
       // ----------------------------------------
 
       const expected = {
-        src: `${BASE_PATH}/ar_1.7777777777777777,c_auto,q_50,w_240,x_0.5,y_0.5/test.jpg`,
+        // src: `${BASE_PATH}/ar_1.7777777777777777,c_auto,q_50,w_240,x_0.5,y_0.5/test.jpg`,
         srcset: [
-          `${BASE_PATH}/ar_4:3,c_fill,q_80,w_414,x_0.5,y_0.5/test.jpg 414w`,
-          `${BASE_PATH}/ar_4:3,c_fill,q_80,w_480,x_0.5,y_0.5/test.jpg 480w`,
-          `${BASE_PATH}/ar_4:3,c_fill,q_80,w_600,x_0.5,y_0.5/test.jpg 600w`,
+          `${BASE_PATH}${apiKey}/resize=width:414,height:311,fit:crop/${image.id} 414w`,
+          `${BASE_PATH}${apiKey}/resize=width:480,height:360,fit:crop/${image.id} 480w`,
+          `${BASE_PATH}${apiKey}/resize=width:600,height:450,fit:crop/${image.id} 600w`,
         ].join(', '),
         sizes: '100vw',
       }
