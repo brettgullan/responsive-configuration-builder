@@ -1,6 +1,6 @@
 {
   "name": "responsive-configuration-builder",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Utility library for generating responsive image urls, srcsets and sources.",
   "main": "build/index.js",
   "files": [
@@ -26,10 +26,10 @@
     "@neutrinojs/mocha": "^8.3.0",
     "chai": "^4.2.0",
     "cloudinary-core": "^2.7.4",
+    "filestack-js": "^3.10.1",
     "neutrino": "^8.3.0"
   },
   "dependencies": {
-    "filestack-js": "^3.10.1",
     "ramda": "^0.26.1",
     "ramda-adjunct": "^2.19.3"
   },
