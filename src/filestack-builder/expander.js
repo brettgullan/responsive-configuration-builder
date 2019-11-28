@@ -1,14 +1,20 @@
-import { allPass, compose, cond, identity, map, propIs, T } from 'ramda'
+import {
+  allPass,
+  compose,
+  cond,
+  identity,
+  propIs,
+  propSatisfies,
+  T,
+} from 'ramda'
 import { isValidNumber } from 'ramda-adjunct'
 
-import { convertToNumberOrUndefined } from '../helpers'
 import evaluateRatio from '../evaluate-ratio'
-
-import { expandWidthsForRatio } from '../token-expander'
+import { expandWidthForRatio, expandWidthsForRatio } from '../token-expander'
 
 //-----------------------------------------------------------------------------
 
-const isNumberLike = compose(isValidNumber, parseFloat)
+export const isNumberLike = compose(isValidNumber, evaluateRatio)
 
 //-----------------------------------------------------------------------------
 
@@ -43,10 +49,18 @@ export default cond([
     allPass([
       propIs(Array, 'widths'),
       propIs(Array, 'resolutions'),
-      propIs(isNumberLike, 'ratio'),
+      propSatisfies(isNumberLike, 'ratio'),
     ]),
     expandWidthsAndResolutionsForRatio,
   ],
-  [allPass([propIs(Array, 'widths')]), expandWidthsForRatio],
+  [
+    allPass([propIs(Array, 'widths'), propSatisfies(isNumberLike, 'ratio')]),
+    expandWidthsForRatio,
+  ],
+  [
+    ({ width, ratio }) => width && ratio,
+    ({ width, ratio, ...options }) =>
+      expandWidthForRatio(width, ratio, options),
+  ],
   [T, identity],
 ])

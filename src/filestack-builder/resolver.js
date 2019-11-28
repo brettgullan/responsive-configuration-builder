@@ -24,6 +24,7 @@ export default curry(([Filelink, apiKey], image, spec) =>
       })
       return src.toString()
     },
+    tap(console.log),
     ({ width, height, fit, crop, align, ...rest }) => {
       let resize = {
         width,
