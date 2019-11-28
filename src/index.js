@@ -1,5 +1,6 @@
 export { default as TokenBuilder } from './token'
 export { default as CloudinaryBuilder } from './cloudinary'
+export { default as FilestackBuilder } from './filestack-builder'
 
 //-----------------------------------------------------------------------------
 
