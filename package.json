@@ -1,6 +1,6 @@
 {
   "name": "responsive-configuration-builder",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "Utility library for generating responsive image urls, srcsets and sources.",
   "main": "build/index.js",
   "files": [
@@ -14,10 +14,16 @@
   "keywords": [
     "responsive",
     "picture",
+    "img",
     "image",
-    "cloudinary",
+    "images",
     "react",
-    "vue"
+    "vue",
+    "src",
+    "srcset",
+    "sizes",
+    "cloudinary",
+    "filestack"
   ],
   "author": "Brett Gullan",
   "license": "MIT",
